@@ -1,0 +1,49 @@
+# Docker ignore — exclude from build context for a smaller, faster image build
+
+# Version control
+.git
+.gitignore
+
+# Node modules (installed fresh inside builder stage)
+node_modules
+
+# Next.js build output (rebuilt inside container)
+.next
+out
+
+# Environment secrets
+.env
+.env.local
+.env.*.local
+
+# Development / editor
+.vscode
+.idea
+*.swp
+*.swo
+*.DS_Store
+Thumbs.db
+
+# Docs and meta files
+README.md
+DEPLOYMENT.md
+AGENTS.md
+CLAUDE.md
+
+# Tests
+__tests__
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+coverage
+
+# Linting / type-check config (not needed at runtime)
+eslint.config.mjs
+tsconfig.json
+postcss.config.mjs
+
+# Docker itself
+Dockerfile
+docker-compose.yml
+.dockerignore

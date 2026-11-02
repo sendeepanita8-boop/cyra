@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  cyra:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runner
+    container_name: cyra-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    # Security: read-only filesystem except /tmp
+    read_only: true
+    tmpfs:
+      - /tmp
+    # No privilege escalation
+    security_opt:
+      - no-new-privileges:true
+    # Drop all capabilities
+    cap_drop:
+      - ALL
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
